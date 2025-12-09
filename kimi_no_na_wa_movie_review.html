@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Movie Review — Kimi no Na wa</title>
+  <style>
+    :root{
+      --accent: rgba(255,255,255,0.9);
+      --glass: rgba(255,255,255,0.06);
+      --glass-strong: rgba(255,255,255,0.12);
+      --rounded: 28px;
+      --muted: rgba(255,255,255,0.8);
+      font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0}
+
+    /* page background using the uploaded poster */
+    .page-bg{
+      position:fixed;inset:0;z-index:-2;background:linear-gradient(180deg, rgba(6,12,34,0.55), rgba(6,12,34,0.35));
+      display:flex;align-items:center;justify-content:center;overflow:hidden;
+    }
+    .page-bg img{min-width:100%;min-height:100%;object-fit:cover;filter:blur(6px) saturate(1.05) contrast(0.95);transform:scale(1.02)}
+
+    /* main wrapper */
+    .wrap{max-width:1080px;margin:40px auto;padding:40px 28px;color:var(--accent);}
+
+    header{display:flex;align-items:center;gap:28px}
+    header h1{font-size:56px;line-height:0.9;margin:0;font-weight:700}
+
+    /* top nav */
+    .nav{margin-left:auto;display:flex;gap:18px;align-items:center}
+    .nav a{padding:8px 18px;border-radius:999px;border:1px solid rgba(255,255,255,0.18);text-decoration:none;color:var(--accent);font-size:14px}
+
+    /* hero card */
+    .hero{position:relative;margin-top:24px;border-radius:24px;overflow:visible}
+    .hero .glass{
+      position:relative;padding:38px;border-radius:24px;background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+      backdrop-filter: blur(6px) saturate(120%);
+      border:1px solid rgba(255,255,255,0.08);
+      min-height:480px;display:flex;flex-direction:column;gap:18px
+    }
+
+    .names{display:flex;align-items:center;gap:12px}
+    .pill{padding:8px 14px;border-radius:999px;border:1px solid rgba(255,255,255,0.12);font-weight:600;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent)}
+
+    .hero-grid{display:grid;grid-template-columns:1fr 380px;gap:28px;align-items:start}
+
+    .left-hero{position:relative}
+    .cover{height:260px;border-radius:18px;overflow:hidden;background-image:url('/mnt/data/Poster Anime Kimi No Nawa.jpg');background-size:cover;background-position:center}
+
+    .meta{margin-top:12px;font-size:14px;opacity:0.95}
+    .big-title{position:absolute;right:28px;top:90px;font-size:64px;font-weight:700;color:rgba(255,255,255,0.92);text-shadow:0 6px 30px rgba(0,0,0,0.45)}
+    .subtitle{position:absolute;right:28px;top:170px;font-size:14px;color:rgba(255,255,255,0.9)}
+
+    /* actions */
+    .actions{display:flex;align-items:center;gap:16px;margin-top:14px}
+    .action-btn{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:999px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);cursor:pointer}
+    .action-btn .thumb{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px}
+
+    /* pills row */
+    .pills{display:flex;gap:12px;margin-top:18px}
+    .pill-large{padding:14px 22px;border-radius:999px;border:1px solid rgba(255,255,255,0.06);background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));font-weight:700}
+
+    /* description area */
+    .desc{margin-top:18px;padding:18px;border-radius:18px;border:1px solid rgba(255,255,255,0.05);background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.008));font-size:14px;line-height:1.6}
+
+    /* thumbnails strip */
+    .thumbs{display:flex;gap:12px;margin-top:20px}
+    .thumb{flex:1 1 0;height:110px;border-radius:12px;overflow:hidden;background-size:cover;background-position:center;border:1px solid rgba(0,0,0,0.18)}
+
+    /* moral story section */
+    .moral{margin-top:40px;text-align:center;padding:48px;border-radius:18px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.04)}
+    .moral h2{font-size:48px;margin:0 0 8px}
+    .moral p{max-width:800px;margin:0 auto;color:rgba(255,255,255,0.85);line-height:1.7}
+    .credit{margin-top:12px;opacity:0.8;font-size:13px}
+
+    /* right column controls */
+    .right-hero{display:flex;flex-direction:column;gap:12px}
+    .rating{display:flex;align-items:center;gap:12px}
+    .rating .score{font-size:28px;font-weight:800}
+
+    /* responsive */
+    @media (max-width:980px){
+      .hero-grid{grid-template-columns:1fr;}
+      .big-title{position:static;text-align:left;font-size:48px;margin-top:18px}
+      .subtitle{position:static;margin-top:6px}
+      header h1{font-size:44px}
+    }
+    @media (max-width:560px){
+      .wrap{padding:20px 16px}
+      header h1{font-size:36px}
+      .cover{height:200px}
+      .moral h2{font-size:36px}
+    }
+  </style>
+</head>
+<body>
+  <div class="page-bg"><img src="/mnt/data/Poster Anime Kimi No Nawa.jpg" alt="bg"></div>
+  <div class="wrap">
+    <header>
+      <h1>Movie<br>Review</h1>
+      <nav class="nav">
+        <a href="#">Description</a>
+        <a href="#">Playlist</a>
+        <a href="#">Profile</a>
+        <a href="#">Next movie</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="glass">
+        <div class="hero-grid">
+          <div class="left-hero">
+            <div class="cover" aria-hidden="true"></div>
+            <div class="names" style="margin-top:12px">
+              <span class="pill">Taki Tachibana</span>
+              <span class="pill">Mitsuha Miyamizu</span>
+            </div>
+            <div class="meta">2016 • Roman/Fantasi • 1 jam 52 menit<br>96% menyukai film ini • Pengguna google</div>
+
+            <div class="actions">
+              <div class="action-btn" id="likeBtn" title="Like">
+                <div class="thumb">👍</div><div>Like</div>
+              </div>
+              <div class="action-btn" id="dislikeBtn" title="Dislike">
+                <div class="thumb">👎</div><div>Dislike</div>
+              </div>
+            </div>
+
+            <div class="pills">
+              <div class="pill-large">Ringkasan</div>
+              <div class="pill-large">Ulasan</div>
+              <div class="pill-large">Cuplikan dan klip</div>
+            </div>
+
+            <div class="desc">
+              <strong>Your Name.</strong> adalah sebuah film anime Jepang produksi tahun 2016 bergenre fantasi yang ditulis dan disutradarai oleh Makoto Shinkai dan diproduksi oleh CoMix Wave Films. Perancangan tokoh film ini dikerjakan oleh Masayoshi Tanaka, dan penciptaan musik dibuat oleh band rock asal Jepang Radwimps. (Contoh teks ringkasan untuk menampilkan layout seperti gambar.)
+            </div>
+
+            <div class="thumbs" style="margin-top:14px">
+              <div class="thumb" style="background-image:url('/mnt/data/Poster Anime Kimi No Nawa.jpg')"></div>
+              <div class="thumb" style="background-image:url('/mnt/data/Poster Anime Kimi No Nawa.jpg')"></div>
+              <div class="thumb" style="background-image:url('/mnt/data/Poster Anime Kimi No Nawa.jpg')"></div>
+            </div>
+
+          </div>
+
+          <aside class="right-hero">
+            <div style="position:relative">
+              <div class="big-title">君の名は。</div>
+              <div class="subtitle">Kimi no Na wa<br><small>Your Name</small></div>
+            </div>
+
+            <div class="rating">
+              <div class="score">96%</div>
+              <div style="font-size:13px;opacity:0.9">menyukai film ini</div>
+            </div>
+
+            <div style="padding-top:8px">
+              <div style="padding:14px;border-radius:12px;background:var(--glass-strong);border:1px solid rgba(255,255,255,0.03);font-size:13px">I love you.<br><small style="opacity:0.8">— sample quote</small></div>
+            </div>
+
+            <div style="margin-top:auto;padding-top:6px;text-align:right;opacity:0.9">Lihat semua &gt;</div>
+
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="moral">
+      <h2>Moral Story</h2>
+      <p>Ingatan manusia memanglah terbatas. Namun apa yang melekat dalam hati takkan pernah selesai dimakan waktu. Berapapun lamanya, sejauh apapun jaraknya, dan serumit apapun alurnya. Ketulusan dalam hati akan selalu menemui tempat untuk pulang.</p>
+      <div class="credit">Himawari.2022</div>
+    </section>
+
+  </div>
+
+  <script>
+    // Like / Dislike toggle behaviour with simple animation
+    const likeBtn = document.getElementById('likeBtn');
+    const dislikeBtn = document.getElementById('dislikeBtn');
+
+    function toggleActive(el){
+      const active = el.classList.toggle('active');
+      if(active){
+        el.style.background = 'linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03))';
+        el.style.borderColor = 'rgba(255,255,255,0.14)';
+      } else {
+        el.style.background = 'rgba(255,255,255,0.04)';
+        el.style.borderColor = 'rgba(255,255,255,0.06)';
+      }
+      return active;
+    }
+
+    likeBtn.addEventListener('click', ()=>{
+      const liked = toggleActive(likeBtn);
+      if(liked){
+        dislikeBtn.classList.remove('active');
+        dislikeBtn.style.background = 'rgba(255,255,255,0.04)';
+        dislikeBtn.style.borderColor = 'rgba(255,255,255,0.06)';
+      }
+    });
+    dislikeBtn.addEventListener('click', ()=>{
+      const disliked = toggleActive(dislikeBtn);
+      if(disliked){
+        likeBtn.classList.remove('active');
+        likeBtn.style.background = 'rgba(255,255,255,0.04)';
+        likeBtn.style.borderColor = 'rgba(255,255,255,0.06)';
+      }
+    });
+
+    // small accessibility: keyboard toggle
+    likeBtn.tabIndex = 0; dislikeBtn.tabIndex = 0;
+    likeBtn.addEventListener('keydown', e=>{ if(e.key==='Enter') likeBtn.click(); });
+    dislikeBtn.addEventListener('keydown', e=>{ if(e.key==='Enter') dislikeBtn.click(); });
+  </script>
+</body>
+</html>
